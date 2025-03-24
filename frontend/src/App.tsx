@@ -1,4 +1,3 @@
-import WSListener from "./components/ws-listener";
 import { useDispatch } from "react-redux";
 import { actions } from "./store/socket";
 
@@ -17,7 +16,6 @@ function App() {
 
     return (
         <div>
-            <WSListener />
             <div onClick={onClick}>Chat App</div>
         </div>
     );

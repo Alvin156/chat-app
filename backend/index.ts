@@ -15,6 +15,8 @@ const io = new Server(server, {
     },
 });
 
+const connected = [];
+
 io.on("connect", async (socket) => {
     console.log("SOCKET ID:" + socket.id);
     await handleWS(socket);

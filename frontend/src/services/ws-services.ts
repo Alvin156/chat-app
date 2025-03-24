@@ -6,7 +6,7 @@ const ws = (io as any).connect("http://localhost:3001", {
     transports: ["websocket", "polling", "flashsocket"],
 });
 
-ws.io.on("connection", () => console.log("Connected to WS Server"));
+ws.io.on("open", () => console.log("Connected to WS Server"));
 
 export default ws as WSClient;
 

@@ -1,6 +1,10 @@
 {
-  "name": "chat-app",
-  "version": "1.0.0",
-  "main": "index.js",
-  "license": "MIT"
+    "name": "chat-app",
+    "version": "1.0.0",
+    "main": "index.js",
+    "license": "MIT",
+    "scripts": {
+        "front": "cd ./frontend && yarn start",
+        "back": "cd ./backend && yarn start"
+    }
 }

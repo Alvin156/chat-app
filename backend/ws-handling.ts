@@ -11,9 +11,9 @@ const handleWS = async (socket: Socket, dir = `${__dirname}\\ws`) => {
             continue;
         }
 
-        const { default: WSEVENT } = await import(`${dir}\\${file}`);
-        // * TODO: Try to get rid of WSEVENT and instead add type directly.
-        const wsEvent: WSEvent = WSEVENT;
+        const { default: wsEvent } = (await import(`${dir}\\${file}`)) as {
+            default: WSEvent;
+        };
         if (!wsEvent) continue;
 
         socket.on(wsEvent.on, (...args) => {
