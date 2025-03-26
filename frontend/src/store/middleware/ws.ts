@@ -1,6 +1,6 @@
-import { actions } from "../socket";
-import ws from "../../services/ws-services";
-import { PayloadAction } from "@reduxjs/toolkit";
+import { actions } from '../socket';
+import ws from '../../services/ws-services';
+import { PayloadAction } from '@reduxjs/toolkit';
 
 export default (store) => (next) => async (action) => {
     if (action.type !== actions.wsCallBegan.type) return next(action);
@@ -11,7 +11,7 @@ export default (store) => (next) => async (action) => {
 
     const unsub = () => {
         ws.off(event, wrapperCallback);
-        ws.off("error", errorCallback);
+        ws.off('error', errorCallback);
     };
 
     const wrapperCallback = (payload: PayloadAction<any>) => {
@@ -34,7 +34,7 @@ export default (store) => (next) => async (action) => {
     };
 
     ws.on(event, wrapperCallback);
-    ws.on("error", errorCallback);
+    ws.on('error', errorCallback);
 
     ws.emit(event, data);
 };

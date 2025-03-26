@@ -1,6 +1,6 @@
-import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import ws from "./middleware/ws";
-import meta from "./reducers/meta";
+import { combineReducers, configureStore } from '@reduxjs/toolkit';
+import ws from './middleware/ws';
+import meta from './reducers/meta';
 
 const store = configureStore({
     middleware: (getDefaultMiddleware) => getDefaultMiddleware().prepend(ws),
