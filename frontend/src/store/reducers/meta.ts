@@ -1,16 +1,20 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 const slice = createSlice({
-    name: "meta",
+    name: 'meta',
     initialState: {
+        userId: '',
         hasListendToWs: false,
     },
     reducers: {
+        setUserId: (action, { payload }) => {
+            action.userId = payload;
+        },
         listendToWs: (action) => {
             action.hasListendToWs = true;
         },
     },
 });
 
-export const { listendToWs } = slice.actions;
+export const { setUserId, listendToWs } = slice.actions;
 export default slice.reducer;

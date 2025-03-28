@@ -3,14 +3,11 @@ import { WS, WSAction, WSEvent } from "../../types/ws";
 import WebSocket from '../websocket'
 
 export default class implements WSEvent<'SEND_MESSAGE'> {
-    public on = 'SEND_MESSAGE' as const
+    public on = 'SEND_MESSAGE' as const;
 
-    public async invoke(ws: WebSocket, client: Socket, { content }: WS.To['SEND_MESSAGE']) {
-        console.log(content);
+    public async invoke(ws: WebSocket, client: Socket, message: WS.To['SEND_MESSAGE']) {
+        console.log(message);
 
-        return [{
-            name: 'RECEIVE_MESSAGE',
-            data: content
-        } as WSAction<'RECEIVE_MESSAGE'>]
+        ws.io.emit('RECEIVE_MESSAGE', message);
     }
 }

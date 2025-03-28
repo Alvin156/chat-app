@@ -13,13 +13,15 @@ export declare namespace WS {
 
 export namespace Params {
     export interface Message {
+        author: string;
         content: string;
     }
 }
 
 export interface WSAction<K extends keyof WS.From> {
-    name: K;
-    data: any
+    event: K;
+    data: any;
+    broadcast?: boolean;
 }
 
 export interface WSEvent<K extends keyof WS.To> {

@@ -1,6 +1,6 @@
 import { Server } from 'http';
 import { Server as SocketServer } from 'socket.io';
-import { WS, WSAction, WSEvent } from '../types/ws';
+import { WS, WSEvent } from '../types/ws';
 import { lstatSync, readdirSync } from 'fs';
 
 export default class WebSocket {
@@ -22,10 +22,11 @@ export default class WebSocket {
         this.io.on('connection', (client) => {
             for (const event of this.events.values())
                 client.on(event.on, async (data) => {
-                    // prettier-ignore
-                    const actions = await event.invoke.call(event, this, client, data) as WSAction<any>[];
-                    for (const action of actions) {
-                        if (action) this.handleAction(action);
+                    // NOTE: Use ws.io.emit() in events.
+                    try {
+                        await event.invoke.call(event, this, client, data);
+                    } catch (error) {
+                        client.emit('error', error);
                     }
                 });
         });
@@ -46,10 +47,5 @@ export default class WebSocket {
 
             this.events.set(event.on, event);
         }
-    }
-
-    private async handleAction(action: WSAction<any>) {
-        // Add rooms/channels function later
-        this.io.emit(action.name, action.data);
     }
 }

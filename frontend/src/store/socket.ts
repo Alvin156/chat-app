@@ -8,6 +8,6 @@ export const actions = {
 };
 
 export interface WSArgs {
-    event?: keyof WS.To;
+    event: keyof WS.To;
     data: object;
 }
