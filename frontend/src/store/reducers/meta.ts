@@ -7,14 +7,11 @@ const slice = createSlice({
         hasListendToWs: false,
     },
     reducers: {
-        setUserId: (action, { payload }) => {
-            action.userId = payload;
-        },
         listendToWs: (action) => {
             action.hasListendToWs = true;
         },
     },
 });
 
-export const { setUserId, listendToWs } = slice.actions;
+export const { listendToWs } = slice.actions;
 export default slice.reducer;

@@ -1,17 +1,12 @@
 import { io } from 'socket.io-client';
 import { WS } from '../types/ws';
-import store from '../store/store';
-import { setUserId } from '../store/reducers/meta';
 
 const ws = io('http://localhost:3001', {
     secure: true,
     transports: ['websocket', 'polling', 'flashsocket'],
 });
 
-ws.on('connect', () => {
-    console.log('Connected to WS Server.');
-    store.dispatch(setUserId(ws.id));
-});
+ws.on('connect', () => console.log('Connected to WS Server.'));
 
 export default ws as WSClient;
 

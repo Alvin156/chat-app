@@ -9,5 +9,5 @@ export const actions = {
 
 export interface WSArgs {
     event: keyof WS.To;
-    data: object;
+    data: object | any;
 }
