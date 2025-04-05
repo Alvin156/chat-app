@@ -1,13 +1,19 @@
-import { configureStore } from '@reduxjs/toolkit';
+import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import ws from './middleware/ws';
 import meta from './reducers/meta';
 import messages from './reducers/messages';
+import rest from './middleware/rest';
 
 const store = configureStore({
-    middleware: (getDefaultMiddleware) => getDefaultMiddleware().prepend(ws),
+    middleware: (getDefaultMiddleware) => 
+        getDefaultMiddleware()
+            .prepend(ws)
+            .prepend(rest),
     reducer: {
         meta,
-        messages,
+        entities: combineReducers({
+            messages,
+        })
     },
 });
 

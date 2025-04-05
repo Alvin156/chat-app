@@ -1,3 +1,3 @@
 import { Dispatch } from '@reduxjs/toolkit';
 
-export type DispatchFunction = (...args: any) => any
+export type DispatchFunction = (...args: any) => any;

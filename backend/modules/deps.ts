@@ -1,14 +1,17 @@
-import Rest from '../rest/server';
+import Users from '../models/data/users';
+import REST from '../rest/server';
 import WebSocket from '../ws/websocket';
 
 export interface Deps {
-    rest: Rest;
+    rest: REST;
     websocket: WebSocket;
+    users: Users;
 }
 
 const deps: Deps = {
-    rest: new Rest(),
+    rest: new REST(),
     websocket: new WebSocket(),
-}
+    users: new Users(),
+};
 
-global['deps'] = deps;
+global['deps' as any] = deps;

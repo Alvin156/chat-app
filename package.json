@@ -6,5 +6,8 @@
     "scripts": {
         "front": "cd ./frontend && yarn start",
         "back": "cd ./backend && yarn start"
+    },
+    "dependencies": {
+        "react-hook-form": "^7.55.0"
     }
 }
