@@ -9,15 +9,15 @@ import { actions as ws } from '../socket';
 const slice = createSlice({
     name: 'meta',
     initialState: {
-        user: '',
+        user: new Cookies().get('jwt_token'),
         hasListendToWs: false,
     },
     reducers: {
-        listendToWs: (action) => {
-            action.hasListendToWs = true;
+        listendToWs: (meta) => {
+            meta.hasListendToWs = true;
         },
-        addUser: (action, { payload }) => {
-            action.user = payload;
+        addUser: (meta, { payload }) => {
+            meta.user = payload;
         },
     },
 });
@@ -36,10 +36,8 @@ export const loginUser: DispatchFunction = (payload: Params.User, cb) => {
                 data: payload,
                 callback: ({ token }) => {
                     dispatch(addUser(token));
-
-                    const decoded = jwtDecode(token);
                     cookies.set('jwt_token', token, {
-                        expires: new Date(decoded.exp! * 1000),
+                        expires: new Date(jwtDecode(token).exp! * 1000),
                     });
                     cb();
                 },
@@ -57,10 +55,8 @@ export const registerUser: DispatchFunction = (payload: Params.User, cb) => {
                 data: payload,
                 callback: ({ token }) => {
                     dispatch(addUser(token));
-
-                    const decoded = jwtDecode(token);
                     cookies.set('jwt_token', token, {
-                        expires: new Date(decoded.exp! * 1000),
+                        expires: new Date(jwtDecode(token).exp! * 1000),
                     });
                     cb();
                 },

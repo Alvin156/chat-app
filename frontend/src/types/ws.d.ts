@@ -11,6 +11,7 @@ export declare namespace WS {
 
 export namespace Params {
     export interface User {
+        _id: string;
         name: string;
         email: string;
         password: string;
@@ -21,7 +22,7 @@ export namespace Params {
     }
 
     export interface Message {
-        author: string;
+        author: User;
         content: string;
     }
 }

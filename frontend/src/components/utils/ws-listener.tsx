@@ -1,10 +1,9 @@
 import { useEffect } from 'react';
-import ws from '../../services/ws-services';
 import { useDispatch, useSelector } from 'react-redux';
-import { Store } from '../../store/store';
-import { addUser, listendToWs, ready } from '../../store/reducers/meta';
+import ws from '../../services/ws-services';
 import { actions as messages } from '../../store/reducers/messages';
-import Cookies from 'universal-cookie';
+import { listendToWs, ready } from '../../store/reducers/meta';
+import { Store } from '../../store/store';
 
 export default function WSListener() {
     const dispatch = useDispatch();
@@ -17,7 +16,6 @@ export default function WSListener() {
 
         // WS: Events go here
         ws.on('RECEIVE_MESSAGE', (message) => {
-            console.log(message);
             dispatch(messages.created(message));
         });
 
@@ -26,9 +24,6 @@ export default function WSListener() {
 
     useEffect(() => {
         dispatch(ready());
-
-        const token = new Cookies().get('jwt_token');
-        if (token) dispatch(addUser(token));
     }, [dispatch]);
 
     return null;

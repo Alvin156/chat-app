@@ -11,6 +11,7 @@ import Register from './components/pages/auth/register';
 const root = ReactDOM.createRoot(
     document.getElementById('root') as HTMLElement
 );
+
 root.render(
     <Provider store={store}>
         <WSListener />

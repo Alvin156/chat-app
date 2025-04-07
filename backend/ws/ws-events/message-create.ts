@@ -10,9 +10,12 @@ export default class implements WSEvent<'SEND_MESSAGE'> {
         client: Socket,
         { content }: Params.Message
     ) {
+        const authorId = ws.sessions.get(client.id);
+        const author = await deps.users.getSafely(authorId);
+
         const message: Params.Message = {
-            author: client.id,
-            content: content,
+            author: await deps.users.secure(author!),
+            content,
         };
 
         ws.io.emit('RECEIVE_MESSAGE', message);

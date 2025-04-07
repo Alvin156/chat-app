@@ -26,7 +26,7 @@ export default function FullParticles({ number = 300 }) {
                 events: {
                     onClick: {
                         enable: true,
-                        mode: 'repulse', // Triggers both repulse & push
+                        mode: 'repulse',
                     },
                     resize: { enable: true },
                 },

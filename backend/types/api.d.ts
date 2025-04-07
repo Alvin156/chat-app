@@ -3,8 +3,9 @@ import Websocket from '../ws/websocket';
 
 export declare namespace WS {
     export interface To {
-        SEND_MESSAGE: Params.Message;
         READY: Params.Token;
+        SEND_MESSAGE: Params.Message;
+        ROOM_CREATE: Params.Room;
     }
 
     export interface From {
@@ -26,8 +27,20 @@ export namespace Params {
     }
 
     export interface Message {
-        author: string;
+        author: User;
         content: string;
+    }
+
+    export interface Room {
+        guildId: string;
+        ownerId: string;
+        name: string;
+        createdAt: Date;
+        inviteCode: string;
+        members: User[];
+        /**     Add logo functionality later.
+         *       guildAvatarURL: string;
+         */
     }
 }
 

@@ -1,10 +1,11 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useState } from 'react';
-import { createMessage } from './store/reducers/messages';
 import { Store } from './store/store';
-import { RoomModal } from './components/rooms/room-modal';
+import { GuildCreateModal } from './components/guilds/guild-create-modal';
 import { Navigate } from 'react-router';
-import Cookies from 'universal-cookie';
+import MessageForm from './components/messages/message-form';
+import MessageBox from './components/messages/message.box';
+import { toggleModal } from './store/reducers/config';
 
 // TODO: Refactor this please.
 
@@ -13,32 +14,21 @@ function App() {
     const messagesList = useSelector(
         (state: Store) => state.entities.messages.list
     );
-    const user = new Cookies().get('jwt_token');
-    const [content, setContent] = useState('');
-    const [roomId, setRoomId] = useState('');
-    const [isModalOpen, setIsModalOpen] = useState(false);
-
-    const submitMessage = (e) => {
-        e.preventDefault();
-
-        if (!content.trim()) return;
-        dispatch(createMessage({ content }));
-        setContent('');
-    };
-
-    const closeModal = () => {
-        setIsModalOpen(false);
-    };
+    const user = useSelector((state: Store) => state.meta.user);
+    const openModal = useSelector((state: Store) => state.config.isModalOpen);
 
     if (!user) return <Navigate to="/login" />;
 
     return (
-        <div className="w-screen h-screen flex flex-col bg-gray-900 text-white">
+        <div
+            className="w-screen h-screen flex flex-col bg-gray-900 text-white"
+            onClick={() => openModal && dispatch(toggleModal(false))}
+        >
             <header className="bg-gray-800 text-white py-4 shadow-md border-b border-gray-700 flex justify-between items-center px-4">
                 <h2 className="text-2xl font-semibold">Chat App</h2>
                 <button
                     className="px-4 py-2 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700"
-                    onClick={() => setIsModalOpen(true)}
+                    onClick={() => dispatch(toggleModal(true))}
                 >
                     Join Room
                 </button>
@@ -46,39 +36,11 @@ function App() {
 
             <div className="flex-1 overflow-y-auto p-4 space-y-2">
                 {messagesList.map((message, index) => (
-                    <div
-                        key={`${message.author}-${message.content}-${index}`}
-                        className="p-3 bg-gray-800 shadow rounded-lg w-fit max-w-[75%]"
-                    >
-                        <p className="text-gray-300">
-                            {message.author.substring(0, 5)}...:{' '}
-                            {message.content}
-                        </p>
-                    </div>
+                    <MessageBox key={index} message={message} />
                 ))}
             </div>
-
-            <form
-                className="flex items-center p-4 bg-gray-800 shadow-md border-t border-gray-700"
-                onSubmit={submitMessage}
-            >
-                <input
-                    className="flex-1 px-4 py-2 bg-gray-700 text-white border border-gray-600 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    value={content}
-                    onChange={(e) => setContent(e.target.value)}
-                    placeholder="Type your message..."
-                />
-                <button className="px-6 py-2 bg-blue-600 text-white font-semibold rounded-r-lg hover:bg-blue-700">
-                    Send
-                </button>
-            </form>
-
-            <RoomModal
-                isOpen={isModalOpen}
-                closeModal={closeModal}
-                roomId={roomId}
-                setRoomId={setRoomId}
-            />
+            <MessageForm />
+            {openModal && <GuildCreateModal />}
         </div>
     );
 }

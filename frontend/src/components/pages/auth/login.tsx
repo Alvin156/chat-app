@@ -1,10 +1,10 @@
-import { Link, Navigate, useNavigate } from 'react-router';
-import FullParticles from '../../utils/full-particles';
-import Input from './input';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
+import { Link, Navigate, useNavigate } from 'react-router';
 import { loginUser } from '../../../store/reducers/meta';
 import { Store } from '../../../store/store';
+import FullParticles from '../../utils/full-particles';
+import Input from './input';
 
 export default function Login() {
     const dispatch = useDispatch();

@@ -20,11 +20,11 @@ const slice = createSlice({
 export const actions = slice.actions;
 export default slice.reducer;
 
-export const createMessage: DispatchFunction = (data) => (dispatch) => {
+export const createMessage: DispatchFunction = (content) => (dispatch) => {
     dispatch(
         api.wsCallBegan({
             event: 'SEND_MESSAGE',
-            data,
+            data: { content },
         })
     );
 };
