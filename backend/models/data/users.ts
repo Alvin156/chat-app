@@ -7,10 +7,7 @@ import jwt from 'jsonwebtoken';
 
 export default class Users extends DBWrapper<string, UserDocument> {
     public async get(id: string | undefined): Promise<UserDocument | null> {
-        const user = await User.findOne({ id });
-        if (!user) return null;
-
-        return user;
+        return (await User.findOne({ id })) ?? null;
     }
 
     public async getByEmail(
@@ -37,9 +34,7 @@ export default class Users extends DBWrapper<string, UserDocument> {
         return await argon2.verify(user.password, password ?? '');
     }
 
-    public async createUser(
-        data: Omit<Params.User, 'createdAt'>
-    ): Promise<UserDocument> {
+    public async createUser(data: Params.User): Promise<UserDocument> {
         const password = await argon2.hash(data.password);
         return await User.create({ ...data, password, createdAt: new Date() });
     }
@@ -63,8 +58,8 @@ export default class Users extends DBWrapper<string, UserDocument> {
 
     public secure(user: UserDocument) {
         const u = user as any;
-        u.email = undefined;
-        u.password = undefined;
+        delete u.email;
+        delete u.password;
 
         return u;
     }

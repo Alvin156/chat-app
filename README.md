@@ -6,6 +6,7 @@ Trying to make a simple chat app.
 -   Add room functionality.
 -   Add avatar functionality.
 -   Add channels.
+-   Remove modal and add dialogs/toast
 
 ## **DONE**:
 
@@ -19,5 +20,6 @@ Trying to make a simple chat app.
 
 ### **PROBLEMS**:
 
--   After a message is created, an event is emitted to all clients
+-   After a message is created, an event is emitted to all clients.
     > Need to change it such that only clients from the room/channel only gets the emitted event.
+-   When a message is recieved, every previous messages is re-rendered.

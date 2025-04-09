@@ -1,19 +1,35 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { Store } from '../../store/store';
 import { toggleModal } from '../../store/reducers/config';
+import Input from '../utils/input';
+import { useForm } from 'react-hook-form';
+import { actions as api } from '../../store/socket';
 
 export function GuildCreateModal() {
     const dispatch = useDispatch();
+    const { register, handleSubmit, reset } = useForm();
     const isModalOpen = useSelector((state: Store) => state.config.isModalOpen);
 
-    const closeModal = () => dispatch(toggleModal(false));
+    const createGuild = (data) => {
+        dispatch(
+            api.wsCallBegan({
+                event: 'GUILD_CREATE',
+                data: data,
+            })
+        );
+    };
+
+    // TODO: Refactor ts.
+    const closeModal = async () => {
+        await handleSubmit(createGuild)().then(() => reset());
+    };
 
     if (!isModalOpen) return null;
 
     return (
         <div
             className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50"
-            onClick={closeModal}
+            onClick={() => dispatch(toggleModal(false))}
         >
             <div
                 className="w-1/3 h-1/3 bg-gray-800 p-6 rounded-lg shadow-lg text-center relative"
@@ -21,7 +37,7 @@ export function GuildCreateModal() {
             >
                 <button
                     className="absolute top-2 right-2 text-gray-400 hover:text-white"
-                    onClick={closeModal}
+                    onClick={() => dispatch(toggleModal(false))}
                 >
                     &times;
                 </button>
@@ -31,16 +47,13 @@ export function GuildCreateModal() {
                     <h3 className="text-lg font-semibold">
                         Enter the name of the server.
                     </h3>
-                    <input
-                        className="w-full px-4 py-2 bg-gray-700 text-white border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        placeholder="Room ID"
-                    />
+                    <Input {...register('name')} placeholder="Guild Name" />
                 </div>
                 <br />
                 <div className="flex justify-between">
                     <button
                         className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700"
-                        onClick={closeModal}
+                        onClick={() => dispatch(toggleModal(false))}
                     >
                         Cancel
                     </button>

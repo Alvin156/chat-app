@@ -9,6 +9,7 @@ export default class implements WSEvent<'READY'> {
         socket: Socket,
         { token }: Params.Token
     ) {
+        console.log(`${socket.id} ---- READY`);
         const clientId = await deps.users.verifyToken(token);
         if (!clientId) throw new Error('Invalid ID.');
 

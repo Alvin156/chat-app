@@ -3,9 +3,12 @@ import ws from '../../services/ws-services';
 import { PayloadAction } from '@reduxjs/toolkit';
 
 export default (store) => (next) => async (action) => {
+    console.log('MIDDLEWARE/WS1', action.type);
     if (action.type !== actions.wsCallBegan.type) return next(action);
 
     const { data, event } = action.payload;
+
+    console.log('MIDDLEWARE/WS2', String(data), event);
 
     next(action);
 

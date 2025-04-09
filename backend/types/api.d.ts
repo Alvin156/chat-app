@@ -1,11 +1,12 @@
 import { Socket } from 'socket.io';
 import Websocket from '../ws/websocket';
+import { UserDocument } from '../models/schema/user';
 
 export declare namespace WS {
     export interface To {
         READY: Params.Token;
         SEND_MESSAGE: Params.Message;
-        ROOM_CREATE: Params.Room;
+        GUILD_CREATE: Params.Guild;
     }
 
     export interface From {
@@ -19,7 +20,7 @@ export namespace Params {
         name: string;
         email: string;
         password: string;
-        createdAt: Date;
+        createdAt?: Date;
     }
 
     export interface Token {
@@ -27,11 +28,12 @@ export namespace Params {
     }
 
     export interface Message {
-        author: User;
+        author: UserDocument;
         content: string;
+        createdAt?: Date;
     }
 
-    export interface Room {
+    export interface Guild {
         guildId: string;
         ownerId: string;
         name: string;

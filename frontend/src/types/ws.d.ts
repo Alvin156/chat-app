@@ -2,6 +2,7 @@ export declare namespace WS {
     export interface To {
         SEND_MESSAGE: Params.Message;
         READY: Params.Token;
+        GUILD_CREATE: Params.Guild;
     }
 
     export interface From {
@@ -24,5 +25,17 @@ export namespace Params {
     export interface Message {
         author: User;
         content: string;
+    }
+
+    export interface Guild {
+        guildId: string;
+        ownerId: string;
+        name: string;
+        createdAt: Date;
+        inviteCode: string;
+        members: User[];
+        /**     Add logo functionality later.
+         *       guildAvatarURL: string;
+         */
     }
 }

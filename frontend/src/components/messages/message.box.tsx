@@ -2,7 +2,7 @@ import { Params } from '../../types/ws';
 
 export default function MessageBox({ message }: { message: Params.Message }) {
     const displayName =
-        message.author.name.length >= 10
+        message.author.name?.length >= 10
             ? message.author.name.substring(0, 7) + '...'
             : message.author.name;
 

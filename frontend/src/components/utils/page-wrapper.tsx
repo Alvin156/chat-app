@@ -1,9 +1,15 @@
 import { useEffect } from 'react';
 
-export default function PageWrapper(props) {
+type PageWrapperProps = {
+    pageTitle: string;
+    className?: string;
+    children: any;
+};
+
+export default function PageWrapper(props: PageWrapperProps) {
     useEffect(() => {
         document.title = props.pageTitle ?? 'Chat App';
     }, []);
 
-    return <div>{props.children}</div>;
+    return <div className={props.className}>{props.children}</div>;
 }

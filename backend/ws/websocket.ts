@@ -1,7 +1,8 @@
 import { Server } from 'http';
-import { Server as SocketServer } from 'socket.io';
+import { Socket, Server as SocketServer } from 'socket.io';
 import { WS, WSEvent } from '../types/api';
 import { lstatSync, readdirSync } from 'fs';
+import { UserDocument } from '../models/schema/user';
 
 export default class WebSocket {
     public events = new Map<keyof WS.To, WSEvent<keyof WS.To>>();
